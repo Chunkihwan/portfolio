@@ -171,6 +171,10 @@ const ThreeBackdrop = dynamic(() => import('./components/three-backdrop').then((
     ssr: false,
 });
 
+const KaleidoscopeHero = dynamic(() => import('./components/kaleidoscope-hero').then((mod) => mod.KaleidoscopeHero), {
+    ssr: false,
+});
+
 const FILTERS = [
     'ALL',
     'INTERACTIVE',
@@ -232,106 +236,143 @@ export default function Home() {
                 </div>
             </header>
 
-            <main id="top" className="mx-auto w-full max-w-6xl px-6 pb-20 pt-16 md:px-10 md:pt-16">
-                <section id="projects" className="pb-20 md:pb-28">
-                    <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <h2 className="text-3xl font-semibold text-white">Projects</h2>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {FILTERS.map((filter) => {
-                                const isActive = activeFilter === filter;
-                                return (
-                                    <button
-                                        type="button"
-                                        key={filter}
-                                        onClick={() => setActiveFilter(filter)}
-                                        className={`rounded-full border px-3 py-1.5 text-xs tracking-wide transition ${
-                                            isActive
-                                                ? 'border-cyan-200 bg-cyan-200 text-slate-900'
-                                                : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-200/60 hover:text-cyan-100'
-                                        }`}
-                                    >
-                                        {filter}
-                                    </button>
-                                );
-                            })}
+            <main id="top" className="w-full pb-20">
+                <section className="relative min-h-[76vh] overflow-hidden border-b border-white/10 px-6 pt-20 md:min-h-[82vh] md:px-10 md:pt-24">
+                    <KaleidoscopeHero />
+                    <div className="relative z-10 mx-auto flex min-h-[calc(76vh-5rem)] w-full max-w-6xl items-end pb-10 md:min-h-[calc(82vh-6rem)] md:pb-14">
+                        <div className="max-w-3xl">
+                            <motion.p
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="mb-4 text-sm text-cyan-100"
+                            >
+                                Interactive Designer / Frontend Developer
+                            </motion.p>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 24 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.65, delay: 0.08 }}
+                                className="text-5xl font-semibold leading-[0.98] text-white md:text-7xl"
+                            >
+                                JACKSON
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 18 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.55, delay: 0.18 }}
+                                className="mt-5 max-w-xl text-base leading-7 text-slate-200 md:text-lg"
+                            >
+                                저널리즘과 인터랙티브를 연결하는 개발자입니다.
+                            </motion.p>
                         </div>
                     </div>
+                </section>
 
-                    <div className="grid gap-4 md:grid-cols-2">
-                        {filteredProjects.map((project, index) => (
-                            <motion.a
-                                href={project.link}
+                <div className="mx-auto w-full max-w-6xl px-6 pt-16 md:px-10 md:pt-16">
+                    <section id="projects" className="pb-20 md:pb-28">
+                        <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                            <div>
+                                <h2 className="text-3xl font-semibold text-white">Projects</h2>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {FILTERS.map((filter) => {
+                                    const isActive = activeFilter === filter;
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={filter}
+                                            onClick={() => setActiveFilter(filter)}
+                                            className={`rounded-full border px-3 py-1.5 text-xs tracking-wide transition ${
+                                                isActive
+                                                    ? 'border-cyan-200 bg-cyan-200 text-slate-900'
+                                                    : 'border-white/20 bg-white/5 text-slate-200 hover:border-cyan-200/60 hover:text-cyan-100'
+                                            }`}
+                                        >
+                                            {filter}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="grid gap-4 md:grid-cols-2">
+                            {filteredProjects.map((project, index) => (
+                                <motion.a
+                                    href={project.link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    key={`${project.title}-${project.date}`}
+                                    initial={{ opacity: 0, y: 24 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ duration: 0.3, delay: index * 0.06 }}
+                                    className="group"
+                                >
+                                    <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200/60">
+                                        <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-white/10">
+                                            <Image
+                                                src={project.image}
+                                                alt={project.title}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                className="object-cover transition duration-500 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 to-transparent" />
+                                        </div>
+                                        <span className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-300">
+                                            {project.date}
+                                        </span>
+                                        <h3 className="text-xl font-medium text-white">{project.title}</h3>
+                                        {/* <p className="mt-3 text-sm leading-6 text-slate-300">{project.summary}</p> */}
+                                        <div className="mt-4 flex flex-wrap gap-2">
+                                            {project.tags.map((tag) => (
+                                                <span
+                                                    key={`${project.title}-${tag}`}
+                                                    className="text-xs text-cyan-100/90"
+                                                >
+                                                    #{tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.a>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section
+                        id="contact"
+                        className="rounded-3xl border border-cyan-200/20 bg-gradient-to-br from-slate-900/70 to-slate-950/70 p-7 backdrop-blur-lg md:p-10"
+                    >
+                        <h2 className="text-2xl font-semibold text-white">Contact</h2>
+                        <p className="mt-3 text-sm text-slate-200">프로젝트 문의, 협업 제안</p>
+                        <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                            <a
+                                className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
+                                href="mailto:yahao2512@gmail.com"
+                            >
+                                e-mail
+                            </a>
+                            <a
+                                className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
+                                href="https://www.instagram.com/yahao2512/"
                                 target="_blank"
                                 rel="noreferrer"
-                                key={`${project.title}-${project.date}`}
-                                initial={{ opacity: 0, y: 24 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.2 }}
-                                transition={{ duration: 0.3, delay: index * 0.06 }}
-                                className="group "
                             >
-                                <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200/60">
-                                    <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-white/10">
-                                        <Image
-                                            src={project.image}
-                                            alt={project.title}
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                            className="object-cover transition duration-500 group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 to-transparent" />
-                                    </div>
-                                    <span className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-300">
-                                        {project.date}
-                                    </span>
-                                    <h3 className="text-xl font-medium text-white">{project.title}</h3>
-                                    {/* <p className="mt-3 text-sm leading-6 text-slate-300">{project.summary}</p> */}
-                                    <div className="mt-4 flex flex-wrap gap-2">
-                                        {project.tags.map((tag) => (
-                                            <span key={`${project.title}-${tag}`} className="text-xs text-cyan-100/90">
-                                                #{tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </motion.a>
-                        ))}
-                    </div>
-                </section>
-
-                <section
-                    id="contact"
-                    className="rounded-3xl border border-cyan-200/20 bg-gradient-to-br from-slate-900/70 to-slate-950/70 p-7 backdrop-blur-lg md:p-10"
-                >
-                    <h2 className="text-2xl font-semibold text-white">Contact</h2>
-                    <p className="mt-3 text-sm text-slate-200">프로젝트 문의, 협업 제안</p>
-                    <div className="mt-5 flex flex-wrap gap-3 text-sm">
-                        <a
-                            className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
-                            href="mailto:yahao2512@gmail.com"
-                        >
-                            e-mail
-                        </a>
-                        <a
-                            className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
-                            href="https://www.instagram.com/yahao2512/"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Instagram
-                        </a>
-                        <a
-                            className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
-                            href="https://brunch.co.kr/@yahao2512"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Brunch
-                        </a>
-                    </div>
-                </section>
+                                Instagram
+                            </a>
+                            <a
+                                className="rounded-full border border-white/20 bg-white/5 px-4 py-2 transition hover:border-cyan-200 hover:text-cyan-100"
+                                href="https://brunch.co.kr/@yahao2512"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Brunch
+                            </a>
+                        </div>
+                    </section>
+                </div>
             </main>
         </div>
     );
