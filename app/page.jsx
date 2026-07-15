@@ -214,7 +214,7 @@ export default function Home() {
                 style={{ scaleX: progressScale }}
             />
 
-            <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/50 backdrop-blur-xl">
+            <header className="sticky top-0 z-40 hidden border-b border-white/10 bg-slate-950/50 backdrop-blur-xl md:block">
                 <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
                     <a href="#top" className="text-sm tracking-[0.3em] text-cyan-200">
                         JACKSON
