@@ -214,7 +214,7 @@ export default function Home() {
                 style={{ scaleX: progressScale }}
             />
 
-            <header className="sticky top-0 z-40 hidden border-b border-white/10 bg-slate-950/50 backdrop-blur-xl md:block">
+            <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/50 backdrop-blur-xl">
                 <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
                     <a href="#top" className="text-sm tracking-[0.3em] text-cyan-200">
                         JACKSON
@@ -237,7 +237,7 @@ export default function Home() {
             </header>
 
             <main id="top" className="w-full pb-20">
-                <section className="relative min-h-[76vh] overflow-hidden border-b border-white/10 px-6 pt-20 md:min-h-[82vh] md:px-10 md:pt-24">
+                <section className="hidden md:block relative min-h-[76vh] overflow-hidden border-b border-white/10 px-6 pt-20 md:min-h-[82vh] md:px-10 md:pt-24">
                     <KaleidoscopeHero />
                     <div className="relative z-10 mx-auto flex min-h-[calc(76vh-5rem)] w-full max-w-6xl items-end pb-10 md:min-h-[calc(82vh-6rem)] md:pb-14">
                         <div className="max-w-3xl">
